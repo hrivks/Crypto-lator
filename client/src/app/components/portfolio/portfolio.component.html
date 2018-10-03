@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col"
+         *ngIf="portfolio && currencyMap">
+        <div class="row portfolio-status">
+            <div class="col">
+                <dt class="text-primary">CASH</dt>
+                <dd>
+                    <i class="fas fa-dollar-sign fa-lg"></i>
+                    <span>{{(portfolio.amount).toFixed(2)}}</span>
+                </dd>
+            </div>
+            <div class="col">
+                <dt class="text-primary">ASSETS</dt>
+                <dd>
+                    <i class="fab fa-bitcoin fa-lg"></i>
+                    <span>{{(assets).toFixed(2)}}</span>
+                </dd>
+            </div>
+            <div class="col">
+                <dt class="text-primary">TOTAL</dt>
+                <dd>
+                    <i class="fas fa-dollar-sign fa-lg"></i>
+                    <span>{{(portfolio.amount + assets).toFixed(2)}}</span>
+                </dd>
+            </div>
+        </div>
+
+        <!-- Fund list -->
+        <div class="mt-3 row">
+            <app-fund-list class="w-100"
+                           [funds]="funds"
+                           [currencyMap]="currencyMap"
+                           (onBuyClick)="showBuyModal($event)"
+                           (onSellClick)="showSellModal($event)"></app-fund-list>
+        </div>
+
+    </div>
+    <div class="col-4">
+        <app-currency-list (onSelect)="showBuyModal($event)"></app-currency-list>
+    </div>
+</div>
+
+<!-- Buy Sell funds modal -->
+<div class="modal fade"
+     id="buySellFundModal">
+    <div class="modal-dialog"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span [hidden]="!isSell">
+                      <i class="fas fa-hand-holding-usd"></i> Sell Fund
+                  </span>
+                    <span [hidden]="isSell">
+                      <i class="fas fa-shopping-cart"></i> Buy Fund
+                  </span>
+                </h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+            <span aria-hidden="true" class="small">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <app-fund-buy-sell [currency]="selectedCurrency"
+                                   [portfolio]="portfolio"
+                                   [isSell]="isSell"
+                                   [sellFund]="sellFund"
+                                   (onComplete)="closeBuyModal($event)"></app-fund-buy-sell>
+            </div>
+        </div>
+    </div>
+</div>

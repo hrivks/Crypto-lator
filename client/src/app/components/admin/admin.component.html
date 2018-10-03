@@ -1,0 +1,155 @@
+<div class="container-fluid">
+    <h3 class="font-weight-light">
+        <i class="fas fa-bolt mr-2"></i> Admin
+    </h3>
+    <hr>
+
+    <div class="row mt-2">
+        <!-- user list -->
+        <div class="col-5">
+            <dd>USERS</dd>
+            <div appScreenHeight>
+                <ul class="list-group shadow">
+                    <li class="list-group-item list-group-item-action"
+                        *ngFor="let thisUser of users"
+                        [ngClass]="{'list-group-item-primary': thisUser === selectedUser}"
+                        (click)="selectUser(thisUser)">
+                        <span class="float-left">
+                      <i *ngIf="thisUser.userType==='user'"
+                      class="fas fa-user-circle fa-lg text-muted"></i>
+                      <i *ngIf="thisUser.userType==='expert'"
+                      class="fas fa-street-view fa-lg text-success"></i>
+                      <i *ngIf="thisUser.userType==='admin'"
+                      class="fas fa-bolt fa-lg text-warning"></i>
+                  </span>
+                        <span class="pl-3 mr-2">{{thisUser.name}}</span> <span class="font-italic text-primary small">@{{thisUser.username}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- user edit / create -->
+        <div class="col border border-bottom-0 border-right-0 border-top-0">
+            <span *ngIf="selectedUser"
+                  class="btn btn-outline-success float-right btn-sm"
+                  (click)="resetForm()">
+              <i class="fas fa-plus"></i> NEW USER
+            </span>
+            <dd *ngIf="selectedUser">EDIT <span class="text-primary">@{{selectedUser.username}}</span></dd>
+            <dd *ngIf="!selectedUser">NEW USER</dd>
+
+            <form class="form shadow mt-3 p-3 border rounded"
+                  (ngSubmit)="updateUser()"
+                  #updateUserForm="ngForm">
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">USERNAME</label>
+                    <input placeholder="Username"
+                           type="text"
+                           class="form-control form-control-sm py-1"
+                           name="userNameField"
+                           [(ngModel)]="username"
+                           #nameField="ngModel"
+                           required/>
+                </div>
+
+                <!-- User Type -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">USER TYPE</label>
+                    <div class="btn-group ml-3"
+                         role="group">
+                        <button type="button"
+                                [ngClass]="{'btn-primary' : userType === 'user'}"
+                                (click)="userType='user'"
+                                class="btn btn-sm ">USER</button>
+                        <button type="button"
+                                [ngClass]="{'btn-primary' : userType === 'expert'}"
+                                (click)="userType='expert'"
+                                class="btn btn-sm ">EXPERT</button>
+                        <button type="button"
+                                [ngClass]="{'btn-primary' : userType === 'admin'}"
+                                (click)="userType='admin'"
+                                class="btn btn-sm">ADMIN</button>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">NAME</label>
+                    <input placeholder="Name"
+                           type="text"
+                           class="form-control form-control-sm py-1"
+                           name="nameField"
+                           [(ngModel)]="name"
+                           #nameField="ngModel" />
+                </div>
+
+                <div class="row pt-2">
+                    <!-- Password -->
+                    <div class="form-group col-sm-6 col-12">
+                        <label class="control-label small text-dark"
+                               for="password">PASSWORD</label>
+                        <input placeholder="*****"
+                               type="password"
+                               class="form-control form-control-sm py-1"
+                               name="passwordField"
+                               [(ngModel)]="password"
+                               #passwordField="ngModel" />
+                    </div>
+
+                    <!-- Verify Password -->
+                    <div class="form-group col-sm-6 col-12">
+                        <label class="control-label small text-dark"
+                               for="name">CONFIRM PASSWORD</label>
+                        <input placeholder="******"
+                               type="password"
+                               class="form-control form-control-sm py-1"
+                               name="confirmPasswordField"
+                               [(ngModel)]="confirmPassword"
+                               #confirmPasswordField="ngModel" />
+                        <span *ngIf="confirmPassword !== password && confirmPasswordField.touched"
+                              class="text-danger ml-2 small">Passwords do not match</span>
+                    </div>
+
+                </div>
+
+                <!-- Email -->
+                <div class="form-group pt-2">
+                    <label class="control-label small text-dark"
+                           for="name">EMAIL</label>
+                    <input placeholder="Email"
+                           type="text"
+                           class="form-control form-control-sm py-1"
+                           name="emailField"
+                           [(ngModel)]="email"
+                           #emailField="ngModel" />
+                </div>
+
+                <!-- form actions -->
+                <div>
+                    <button type="submit"
+                            class="btn btn-sm btn-primary py-1"
+                            [disabled]="updateUserForm.invalid || confirmPassword !== password">
+                          {{selectedUser? 'SAVE' : 'CREATE'}}
+                          </button>
+                    <span class="btn btn-sm btn-outline-danger py-1"
+                          (click)="deleteConfirmation=true"
+                          [hidden]="!selectedUser || deleteConfirmation">
+                       Delete
+                        </span>
+                    <span class="btn btn-sm btn-outline-danger py-1"
+                          (click)="deleteUser()"
+                          [hidden]="!selectedUser || !deleteConfirmation">
+                       Sure?
+                      </span>
+                </div>
+                <!-- /form actions -->
+            </form>
+            <!--/form-->
+        </div>
+    </div>
+</div>

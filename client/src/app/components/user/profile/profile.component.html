@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="pt-4 w-75 m-auto"
+         *ngIf="currentUser">
+        <div>
+            <div class="float-left mr-3">
+                <i *ngIf="currentUser.userType === 'user'"
+                   class="text-muted fa fa-user-circle fa-4x"></i>
+                <i *ngIf="currentUser.userType === 'expert'"
+                   class="text-success fa fa-street-view fa-4x"></i>
+                <i *ngIf="currentUser.userType === 'admin'"
+                   class="text-warning fa fa-bolt fa-4x"></i>
+            </div>
+            <div class="ml-5">
+                <h3 class="text-primary">
+                    @{{currentUser.username}}
+                </h3>
+                <div *ngIf="currentUser.userType === 'expert'"
+                     class="text-success small ml-4"> [ EXPERT ]
+                </div>
+                <div *ngIf="currentUser.userType === 'admin'"
+                     class="text-warning small ml-4"> [ ADMIN ]
+                </div>
+            </div>
+
+        </div>
+        <hr>
+        <!--form-->
+        <form class="form"
+              (ngSubmit)="updateUser()"
+              #profileForm="ngForm">
+
+            <!-- Name -->
+            <div class="form-group">
+                <label class="control-label text-dark"
+                       for="name">NAME</label>
+                <input placeholder="Name"
+                       type="text"
+                       class="form-control form-control-sm py-1"
+                       name="nameField"
+                       [(ngModel)]="name"
+                       #nameField="ngModel" />
+            </div>
+
+            <div class="row pt-2">
+                <!-- Password -->
+                <div class="form-group col-sm-6 col-12">
+                    <label class="control-label text-dark"
+                           for="password">PASSWORD</label>
+                    <input placeholder="*****"
+                           type="password"
+                           class="form-control form-control-sm py-1"
+                           name="passwordField"
+                           [(ngModel)]="password"
+                           #passwordField="ngModel" />
+                </div>
+
+                <!-- Verify Password -->
+                <div class="form-group col-sm-6 col-12">
+                    <label class="control-label text-dark"
+                           for="name">CONFIRM PASSWORD</label>
+                    <input placeholder="******"
+                           type="password"
+                           class="form-control form-control-sm py-1"
+                           name="confirmPasswordField"
+                           [(ngModel)]="confirmPassword"
+                           #confirmPasswordField="ngModel" />
+                    <span *ngIf="confirmPassword && confirmPassword !== password && confirmPasswordField.touched"
+                          class="text-danger ml-2 small">Passwords do not match</span>
+                </div>
+
+            </div>
+
+            <!-- Email -->
+            <div class="form-group pt-2">
+                <label class="control-label text-dark"
+                       for="name">EMAIL</label>
+                <input placeholder="Email"
+                       type="text"
+                       class="form-control form-control-sm py-1"
+                       name="emailField"
+                       [(ngModel)]="email"
+                       #emailField="ngModel" />
+            </div>
+
+            <!-- form actions -->
+            <div>
+                <button type="submit"
+                        class="btn btn-sm btn-primary py-1"
+                        [disabled]="profileForm.invalid || profileForm.untouched || confirmPassword !== password">Save</button>
+            </div>
+            <!-- /form actions -->
+        </form>
+        <!--/form-->
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<!-- Nav bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-0 sticky-top border border-top-0 border-left-0 border-right-0 border-primary">
+    <a class="navbar-brand font-weight-light"
+       href="#">$Crypto-lator</a>
+    <button class="navbar-toggler"
+            type="button"
+            data-target="#navbarContent"
+            data-toggle="collapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="collapse navbar-collapse"
+         id="navbarContent">
+        <ul class="navbar-nav ml-3 mr-auto">
+            <li class="nav-item mx-3">
+                <a class="nav-link"
+                   [routerLink]="['/portfolio']">Portfolio <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link"
+                   [routerLink]="['/profile']">Profile</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link"
+                   [routerLink]="['/discussion']">Discussions</a>
+            </li>
+            <li class="nav-item mx-3"
+                *ngIf="loggedIn && loggedIn.userType === 'admin'">
+                <a class="nav-link btn-outline-warning"
+                   [routerLink]="['/admin']"> <i class="fas fa-bolt fa-lg mr-1"></i> Admin</a>
+            </li>
+            <li class="nav-item mx-3"
+                [hidden]="!showLoader">
+                <svg class="mt-1"
+                     xmlns:svg="http://www.w3.org/2000/svg"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                     version="1.0"
+                     width="37px"
+                     height="37px"
+                     viewBox="0 0 128 128"
+                     xml:space="preserve"><g><circle cx="16" cy="64" r="16" fill="#2196f3" fill-opacity="1"/><circle cx="16" cy="64" r="14.344" fill="#2196f3" fill-opacity="1" transform="rotate(45 64 64)"/><circle cx="16" cy="64" r="12.531" fill="#2196f3" fill-opacity="1" transform="rotate(90 64 64)"/><circle cx="16" cy="64" r="10.75" fill="#2196f3" fill-opacity="1" transform="rotate(135 64 64)"/><circle cx="16" cy="64" r="10.063" fill="#2196f3" fill-opacity="1" transform="rotate(180 64 64)"/><circle cx="16" cy="64" r="8.063" fill="#2196f3" fill-opacity="1" transform="rotate(225 64 64)"/><circle cx="16" cy="64" r="6.438" fill="#2196f3" fill-opacity="1" transform="rotate(270 64 64)"/><circle cx="16" cy="64" r="5.375" fill="#2196f3" fill-opacity="1" transform="rotate(315 64 64)"/><animateTransform attributeName="transform" type="rotate" values="0 64 64;315 64 64;270 64 64;225 64 64;180 64 64;135 64 64;90 64 64;45 64 64" calcMode="discrete" dur="640ms" repeatCount="indefinite"></animateTransform></g></svg>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav form-inline ml-auto"
+            *ngIf="!loggedIn">
+            <li class="nav-item mx-2">
+                <a class="btn btn-sm btn-primary"
+                   [routerLink]="['/login']">Login</a>
+            </li>
+
+            <li class="nav-item mx-2">
+                <a class="btn btn-sm btn-primary"
+                   [routerLink]="['/register']">Register</a>
+            </li>
+
+        </ul>
+
+        <ul class="navbar-nav form-inline ml-auto"
+            *ngIf="loggedIn">
+
+            <li class="nav-item mr-1">
+                <i *ngIf="loggedIn.userType==='user'"
+                   class="fas fa-user-circle fa-3x py-1 text-muted"></i>
+                <i *ngIf="loggedIn.userType==='expert'"
+                   class="fas fa-street-view fa-3x py-1 text-success"></i>
+                <i *ngIf="loggedIn.userType==='admin'"
+                   class="fas fa-bolt fa-3x py-1 text-warning"></i>
+            </li>
+            <li class="nav-item mr-3">
+                <div>
+                    {{loggedIn.name}}
+                </div>
+                <div class="text-primary font-italic small">
+                    @{{loggedIn.username}}
+                </div>
+            </li>
+
+            <li class="nav-item mx-2">
+                <span class="btn btn-sm btn-primary"
+                      (click)="logout()">Logout</span>
+            </li>
+        </ul>
+
+    </div>
+</nav>

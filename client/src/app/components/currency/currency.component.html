@@ -1,0 +1,46 @@
+<div class="form-group mb-1">
+
+    <input type="text"
+           placeholder="Search Currency"
+           class="form-control form-control-sm w-50 ml-auto"
+           [(ngModel)]="currencySearch">
+
+</div>
+<div class="scroll-container border border-left-0 border-right-0 rounded shadow"
+     appScreenHeight>
+    <ul class="list-group shadow rounded">
+        <li *ngFor="let thisCurrency of currency | filterCurrency: currencySearch"
+            class="list-group-item">
+            <div class="row">
+                <div class="col-1">
+                    <i class="cc {{thisCurrency.symbol.toUpperCase()}}"></i>
+                </div>
+                <div class="col-6">
+                    <div>
+                        <span>{{thisCurrency.name}} </span>
+                        <!-- <span>|</span> -->
+                        <span class="badge badge-primary text-monospace small font-weight-bold">{{thisCurrency.symbol}}</span>
+                    </div>
+                    <div>
+                        <span class="text-muted small"
+                              title="Rank">Rank #{{thisCurrency.rank}}</span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="btn btn-outline-success py-2 float-right mt-1"
+                         (click)="onCurrencySelect(thisCurrency)"
+                         title="buy">
+                        <span>$ {{thisCurrency.value.toFixed(3)}}</span>
+                        <span class="fas fa-shopping-cart"></span>
+                    </div>
+
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item"
+            *ngIf="(currency | filterCurrency: currencySearch).length == 0">
+            <i>No currency found</i>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col">
+        <div class="jumbotron h-100 mb-0">
+            <h1 class="display-3">$Crypto-lator</h1>
+            <p class="lead">
+                The Cryptocurrency trading simulator
+            </p>
+            <hr class="my-4">
+            <p>Start with $20,000 and trade cryptocurrency</p>
+            <p>No real money! It's all virtual</p>
+            <p class="lead">
+                <a class="btn btn-sm mt-3 btn-primary btn-lg"
+                   [routerLink]="['/login']"
+                   role="button">Login to start trading</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-4">
+        <app-currency-list (onSelect)="redirectToLogin($event)"></app-currency-list>
+    </div>
+</div>

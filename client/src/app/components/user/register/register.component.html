@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="user-registration mt-3">
+        <h3>Register</h3>
+        <hr>
+        <br>
+        <!--form-->
+        <form class="form"
+              (ngSubmit)="register()"
+              #registerForm="ngForm">
+            <!-- User Name -->
+            <div class="form-group">
+                <input placeholder="User Name"
+                       type="text"
+                       class="form-control form-control-sm"
+                       name="usernameField"
+                       [(ngModel)]="username"
+                       #usernameField="ngModel"
+                       [ngClass]="{'border-danger': registrationErrors.username || (!usernameField.valid && usernameField.touched)}"
+                       required />
+                <span *ngIf="usernameField.invalid && usernameField.touched"
+                      class="text-danger ml-2">Username is required</span>
+                <span *ngIf="registrationErrors.username"
+                      class="text-danger ml-2">{{registrationErrors.username}}</span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <input placeholder="Password"
+                       type="password"
+                       class="form-control form-control-sm"
+                       name="passwordField"
+                       [(ngModel)]="password"
+                       #passwordField="ngModel"
+                       [ngClass]="{'border-danger': (!passwordField.valid && passwordField.touched)}"
+                       required />
+                <span *ngIf="passwordField.invalid && passwordField.touched"
+                      class="text-danger ml-2">Password is required</span>
+            </div>
+
+            <!-- Verify Password -->
+            <div class="form-group">
+                <input placeholder="Verify Password"
+                       type="password"
+                       class="form-control form-control-sm"
+                       name="verifyPasswordField"
+                       [(ngModel)]="verifyPassword"
+                       #verifyPasswordField="ngModel"
+                       [ngClass]="{'border-danger': verifyPassword !== password && verifyPasswordField.touched}"
+                       required />
+                <span *ngIf="verifyPasswordField.invalid && verifyPasswordField.touched"
+                      class="text-danger ml-2">Verify Password is required</span>
+                <span *ngIf="verifyPassword && verifyPassword !== password && verifyPasswordField.touched"
+                      class="text-danger ml-2">Passwords do not match</span>
+            </div>
+
+            <!-- form actions -->
+            <div>
+                <button type="submit"
+                        class="btn btn-sm btn-primary"
+                        [disabled]="registerForm.invalid || verifyPassword !== password">Register</button>
+            </div>
+            <!-- /form actions -->
+        </form>
+        <!--/form-->
+    </div>
+</div>

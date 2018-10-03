@@ -1,0 +1,62 @@
+<div class="fund-list"
+     *ngIf="funds && currencyMap">
+    <div [hidden]="funds.length > 0"
+         class="text-muted font-italic text-center mt-5">
+        <i class="fab fa-bitcoin fa-7x"></i> <br/><br/> You are not rich yet! <br/> Buy some crypto-currency! <br/>
+    </div>
+
+    <div class="scroll-container"
+         appScreenHeight
+         heightOffset="-135">
+        <div class="row no-gutters">
+            <div *ngFor="let thisFund of funds"
+                 class="col-4">
+
+                <div class="card border shadow mx-2 mb-3">
+
+                    <div class="card-header py-0 pr-2 mx-2 mt-1 bg-light border border-left-0 border-right-0 border-top-0">
+
+                        <span class="mr-2">{{currencyMap[thisFund.name].name}}</span>
+                        <i [ngClass]="['cc', currencyMap[thisFund.name].symbol.toUpperCase()]"></i>
+                        <span class="badge badge-primary text-monospace py-1 ml-2 font-weight-bold float-right mt-2">{{currencyMap[thisFund.name].symbol}}</span>
+
+                    </div>
+                    <div class="card-body text-dark px-2 pt-0 pb-2">
+
+                        <div class="row text-center align-items-center">
+                            <div class="col py-2 border border-top-0 border-bottom-0 border-left-0">
+                                <h4 title="Quantity">
+                                    <span> {{thisFund.quantity}}</span>
+                                </h4>
+                                <div class="text-muted small"
+                                     title="Value per quantity">
+                                    <i class="fas fa-dollar-sign"></i> <span>{{currencyMap[thisFund.name].value.toFixed(2)}}</span>
+                                </div>
+                            </div>
+                            <div class="col font-weight-bold">
+                                <div>
+                                    <i class="fas fa-dollar-sign"></i> {{(thisFund.quantity * currencyMap[thisFund.name].value).toFixed(2)}}
+                                </div>
+                                <div class="btn-group btn-group-sm mt-2">
+                                    <button class="btn btn-sm btn-outline-success"
+                                            title="Buy"
+                                            (click)="buyClick(thisFund)">
+                                        <span>BUY</span>
+                            </button>
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            title="Sell"
+                                            (click)="sellClick(thisFund)"> <span>SELL</span>
+                            </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

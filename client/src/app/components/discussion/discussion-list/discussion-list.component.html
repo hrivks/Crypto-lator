@@ -1,0 +1,22 @@
+<div class="list-group w-100 shadow-sm">
+    <div class="list-group-item list-group-item-action"
+         *ngFor="let thisDiscussion of discussions"
+         [ngClass]="{'list-group-item-primary': selectedDiscussion=== thisDiscussion._id}"
+         (click)="openDisucssion(thisDiscussion)">
+
+        <div class="font-weight-bold">
+            {{thisDiscussion.title}}
+        </div>
+        <div class="font-italic small mr-3">
+            {{thisDiscussion.description.substring(0, 100)}} {{thisDiscussion.description.length > 100 ? '...' : ''}}
+        </div>
+        <div class="float-right small font-italic text-primary">
+            @{{thisDiscussion.createdBy}}
+        </div>
+    </div>
+    <div class="text-muted font-italic text-center my-3 py-3"
+         [hidden]="discussions && discussions.length > 0">
+        <br><br><br><br> No discussions available. <br> Create a discussion to connect with experts and peers
+        <br><br><br><br>
+    </div>
+</div>

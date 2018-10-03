@@ -1,0 +1,84 @@
+<div *ngIf="!portfolio">Error: portfolio info needed</div>
+<div *ngIf="currency && portfolio">
+    <div class="mb-3">
+        <h2>
+            <i class="cc {{currency.symbol.toUpperCase()}}"></i>
+            <span>{{currency.name}} </span>
+            <span>|</span>
+            <span class="text-monospace small text-dark font-weight-bold">{{currency.symbol}}</span>
+        </h2>
+    </div>
+    <form class="form"
+          (ngSubmit)="buyFund()"
+          #buyForm="ngForm">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label"
+                           for="quantity">Quantity</label>
+                    <input type="number"
+                           class="form-control py-1"
+                           name="quantity"
+                           [(ngModel)]="quantity"
+                           (keyup)="quantityChanged($event)"
+                           #quantityField="ngModel"
+                           [ngClass]="{'btn-outline-danger': quantityField.touched && !quantityField.valid }"
+                           required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label"
+                           for="amount">Amount ($)</label>
+                    <input type="text"
+                           class="form-control py-1"
+                           name="amount"
+                           [(ngModel)]="amount"
+                           (keyup)="amountChanged($event)"
+                           #amountField="ngModel"
+                           [ngClass]="{'btn-outline-danger': quantityField.touched && !quantityField.valid }"
+                           required>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col small">
+                <span class="label bg-danger text-light rounded py-1 px-2 mr-2"
+                      *ngIf="error">{{error}}</span>
+                <span class="font-italic"> you will have <b class="text-success">${{willHaveAmount.toFixed(2)}}</b> after this purchase </span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <button type="button"
+                        [disabled]="error"
+                        [hidden]="buyConfirmation"
+                        (click)="buyConfirmation=(true && !error)"
+                        class="btn btn-success btn-sm">
+                        <span *ngIf="isSell">
+                            <i class="fas fa-hand-holding-usd"></i> Sell
+                        </span>
+                        <span *ngIf="!isSell">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </span>
+                 
+                </button>
+                <button type="submit"
+                        [hidden]="!buyConfirmation"
+                        class="btn btn-success btn-sm">
+                        <span *ngIf="isSell">
+                            <i class="fas fa-hand-holding-usd"></i> Confirm Sell
+                        </span>
+                        <span *ngIf="!isSell">
+                            <i class="fas fa-shopping-cart"></i> Confirm Buy
+                        </span>
+                </button>
+                <button type="button"
+                        (click)="cancel()"
+                        class="btn btn-outline-danger btn-sm float-right">
+          Cancel
+        </button>
+            </div>
+        </div>
+    </form>
+</div>

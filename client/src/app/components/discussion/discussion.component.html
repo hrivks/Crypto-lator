@@ -1,0 +1,90 @@
+<div class="discussions">
+    <div class="row">
+
+        <!-- left side bar -->
+        <div class="col-4">
+            <div>
+                <h3 class="font-weight-light">
+                    <i class="fas fa-comments mr-2"></i>Discussions
+                    <div class="btn btn-sm btn-success float-right"
+                         *ngIf="currentUser"
+                         (click)="openCreateDiscussionModal()">
+                        <i class="fas fa-plus"></i> New
+                    </div>
+                </h3>
+            </div>
+            <div class="pt-2">
+                <div class="scroll-container"
+                     appScreenHeight
+                     [heightOffset]="-15">
+                    <app-discussion-list [discussions]="discussions"></app-discussion-list>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col border border-top-0 border-bottom-0 border-right-0">
+            <div *ngIf="selectedDiscussion">
+
+                <div class="float-right"
+                     *ngIf="currentUser && (currentUser.userType === 'admin' || currentUser.username === selectedDiscussion.createdBy)">
+                    <div class="btn btn-sm btn-outline-warning mr-1"
+                         (click)="openEditDiscussionModal(selectedDiscussion)">
+                        <i class="fas fa-edit mr-1"></i> Edit
+                    </div>
+                    <div class="btn btn-sm btn-outline-danger"
+                         [hidden]="deleteConfirmation"
+                         (click)="deleteConfirmation=true">
+                        <i class="fas fa-times mr-1"></i> Delete
+                    </div>
+                    <div class="btn btn-sm btn-outline-danger"
+                         [hidden]="!deleteConfirmation"
+                         (click)="deleteDiscussion(selectedDiscussion)">
+                        <i class="fas fa-times mr-1"></i> Sure?
+                    </div>
+                </div>
+
+                <div class="mr-2"
+                     appScreenHeight>
+                    <app-discussion-view [discussion]="selectedDiscussion"></app-discussion-view>
+                </div>
+            </div>
+            <div [hidden]="selectedDiscussion"
+                 class="text-center w-100 mt-3">
+                <br><br><br>
+                <i class="fas fa-comments fa-9x"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Create - Update modal -->
+    <div class="modal fade"
+         id="createUpdateFundModal">
+        <div class="modal-dialog"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        {{openModalTitle}} Discucssion
+                    </h5>
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                      <span aria-hidden="true" class="small">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="openModalTitle == 'Create'">
+                        <app-discussion-create (onComplete)="onDiscussionCreated($event)"></app-discussion-create>
+                    </div>
+                    <div *ngIf="openModalTitle == 'Edit'">
+                        <app-discussion-edit [discussion]="selectedDiscussion"
+                                             (onComplete)="onDiscussionUpdated($event)"></app-discussion-edit>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

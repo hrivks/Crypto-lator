@@ -1,0 +1,42 @@
+<div>
+    <form class="form"
+          (ngSubmit)="createDiscussion(newDiscussionForm)"
+          #newDiscussionForm="ngForm">
+        <!-- Title -->
+        <div class="form-group">
+            <input placeholder="Title"
+                   type="text"
+                   class="form-control form-control-lg title-field"
+                   name="titleField"
+                   [(ngModel)]="title"
+                   #titleField="ngModel"
+                   [ngClass]="{'border-danger': !titleField.valid && titleField.touched}"
+                   required />
+            <span *ngIf="titleField.invalid && titleField.touched"
+                  class="text-danger ml-2">Title is required</span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group small">
+            <textarea placeholder="Description"
+                      rows="3"
+                      type="text"
+                      class="form-control"
+                      name="descriptionField"
+                      [(ngModel)]="description"
+                      #descriptionField="ngModel"
+                      [ngClass]="{'border-danger': (!descriptionField.valid && descriptionField.touched)}"> </textarea>
+            <span *ngIf="descriptionField.invalid && descriptionField.touched"
+                  class="text-danger ml-2">Description is required</span>
+        </div>
+
+        <!-- form actions -->
+        <div>
+            <button type="submit"
+                    class="btn btn-sm btn-success mr-2"
+                    [disabled]="newDiscussionForm.invalid">Create Discussion</button>
+
+        </div>
+        <!-- /form actions -->
+    </form>
+</div>

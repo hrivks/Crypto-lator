@@ -1,0 +1,30 @@
+{
+    "name": "crypto-lator",
+    "version": "1.0.0",
+    "description": "A virtual cryptocurrency trading simulator",
+    "main": "server.js",
+    "dependencies": {
+        "bcrypt-nodejs": "latest",
+        "body-parser": "latest",
+        "connect-ensure-login": "latest",
+        "connect-mongo": "latest",
+        "cookie-parser": "latest",
+        "cors": "latest",
+        "express": "latest",
+        "express-favicon-short-circuit": "latest",
+        "express-session": "latest",
+        "mongoose": "^5.0.15",
+        "passport": "latest",
+        "passport-local": "latest",
+        "q": "^1.5.1",
+        "request": "^2.85.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "heroku-postbuild": "cd client && npm install"
+    },
+    "author": "Hari Vikas Janarthanan<Janarthanan.h@ccs.neu.edu>",
+    "license": "MIT"
+}

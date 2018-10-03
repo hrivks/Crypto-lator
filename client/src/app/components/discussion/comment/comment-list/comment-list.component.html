@@ -1,0 +1,89 @@
+<div class="comments">
+    <div *ngIf="currentUser"
+         class="create-comment border border-left-0 border-right-0 border-top-0 shadow-sm rounded p-3">
+
+        <form class="form"
+              (ngSubmit)="createComment()"
+              #expertCommentForm="ngForm">
+
+            <textarea placeholder="{{isUserExpert? 'Expert Answer' : 'Type here...' }}"
+                      class="form-control form-control-sm h-100 pt-1"
+                      name="newCommentField"
+                      [(ngModel)]="newComment"
+                      #newExpertCommentField="ngModel"></textarea>
+            <button class="btn btn-outline-primary btn-sm mt-2"
+                    [disabled]="requestInProgress"
+                    type="submit">
+                                   <i class="fas fa-plus mr-2"></i> 
+                                   {{isUserExpert? 'Post Expert Answer' : 'Post Comment' }}
+                        </button>
+            <span class="small text-primary font-italic ml-2 align-bottom">{{requestStatus}}</span>
+
+        </form>
+    </div>
+
+    <!-- Expert Answers -->
+    <dd class="text-primary font-weight-bold small mt-3">EXPERT ANSWERS</dd>
+    <div class="expert-comments pl-4 mt-1 border border-left-0 border-right-0 border-bottom-0 border-primary">
+        <div class="mt-3 small font-italic text-muted"
+             *ngIf="expertComments.length === 0">
+            No expert answers available
+        </div>
+        <div class="shadow-sm border rounded border-primary border-top-0 border-right-0 border-bottom-0 p-3 my-3"
+             *ngFor="let thisComment of expertComments">
+            <div>
+                {{thisComment.text}}
+            </div>
+            <div class="small text-primary mt-1">
+                <span class="mr-2 font-italic">@{{thisComment.createdBy}} </span>
+                <span *ngIf="currentUser && (thisComment.createdBy === currentUser.username || currentUser.userType === 'admin')">
+                <span class="btn btn-sm btn-outline-danger badge py-1 px-1"
+                      [hidden]="deleteConfirmations[thisComment._id]"
+                      (click)="deleteConfirmations[thisComment._id] = true">
+                    <i class="fas fa-times"></i> DELETE
+                </span>
+                <span class="btn btn-sm btn-outline-danger badge py-1 px-1"
+                      [hidden]="!deleteConfirmations[thisComment._id]"
+                      (click)="deleteComment(thisComment)">
+                    <i class="fas fa-times"></i> SURE?
+                </span>
+                </span>
+
+                <span class="ml-2 text-muted float-right">{{thisComment.dateCreated.toLocaleString()}} </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Comments -->
+    <dd class="text-muted font-weight-bold small mt-3">USER COMMENTS</dd>
+    <div class="user-comments pl-4 mt-1 border border-left-0 border-right-0 border-bottom-0">
+        <div class="mt-3 small font-italic text-muted"
+             *ngIf="userComments.length === 0">
+            No user comments available
+        </div>
+        <div class="shadow-sm border rounded border-top-0 border-right-0 border-bottom-0 p-3 my-3"
+             *ngFor="let thisComment of userComments">
+            <div>
+                {{thisComment.text}}
+            </div>
+            <div class="small text-dark mt-1">
+                <span class="mr-2 font-italic text-muted">@{{thisComment.createdBy}} </span>
+                <span *ngIf="currentUser && (thisComment.createdBy === currentUser.username || currentUser.userType === 'admin')">
+                <span class="btn btn-sm btn-outline-danger badge py-1 px-1"
+                      [hidden]="deleteConfirmations[thisComment._id]"
+                      (click)="deleteConfirmations[thisComment._id] = true">
+                    <i class="fas fa-times"></i> DELETE
+                </span>
+                <span class="btn btn-sm btn-outline-danger badge py-1 px-1"
+                      [hidden]="!deleteConfirmations[thisComment._id]"
+                      (click)="deleteComment(thisComment)">
+                    <i class="fas fa-times"></i> SURE?
+                </span>
+                </span>
+
+                <span class="ml-2 text-muted float-right">{{thisComment.dateCreated.toLocaleString()}} </span>
+            </div>
+        </div>
+    </div>
+
+</div>

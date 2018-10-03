@@ -1,0 +1,30 @@
+<div class="hvj-app-alert">
+
+    <div class="alert fade show pr-3"
+         [hidden]="!alertVisible"
+         [ngClass]="'alert-' + (alertType ? alertType : 'danger')"
+         role="alert">
+        <button type="button"
+                class="close"
+                (click)="alertVisible = false">
+      
+        <i class="fas fa-times small"></i>
+      
+    </button>
+
+        <div class="d-inline-block align-middle mr-3">
+            <span *ngIf="alertType == 'danger'">
+                    <i class="fas fa-times-circle fa-2x"></i>                 
+            </span>
+            <span *ngIf="alertType == 'warning'">
+                <i class="fas fa-exclamation-circle fa-2x"></i>
+            </span>
+            <span *ngIf="alertType == 'success'">
+            <i class="fas fa-check-circle fa-2x"></i>
+            </span>
+        </div>
+        <div [innerHtml]="alertText"
+             class="alert-text d-inline-block align-middle"></div>
+    </div>
+
+</div>
